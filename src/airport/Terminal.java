@@ -16,7 +16,6 @@ public class Terminal {
         return name;
     }
 
-
     public Flight[] getFlights() {
         return flights;
     }
