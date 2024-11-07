@@ -10,8 +10,4 @@ public class Gate {
     public String getGateNumber() {
         return gateNumber;
     }
-
-    public void setGateNumber(String gateNumber) {
-        this.gateNumber = gateNumber;
-    }
 }

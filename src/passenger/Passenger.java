@@ -17,23 +17,11 @@ public class Passenger {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getPassportNumber() {
         return passportNumber;
     }
 
-    public void setPassportNumber(String passportNumber) {
-        this.passportNumber = passportNumber;
-    }
-
     public LocalDate getDateOfBirth() {
         return dateOfBirth;
-    }
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
     }
 }

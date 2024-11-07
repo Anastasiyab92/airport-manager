@@ -8,18 +8,14 @@ public class Terminal {
     private String name;
     private Flight[] flights;
 
-    public Terminal(String name, Flight[] flights) {
+    public Terminal(String name) {
         this.name = name;
-        this.flights = flights;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public Flight[] getFlights() {
         return flights;

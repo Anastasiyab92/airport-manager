@@ -10,8 +10,4 @@ public class Seat {
     public String getSeatNumber() {
         return seatNumber;
     }
-
-    public void setSeatNumber(String seatNumber) {
-        this.seatNumber = seatNumber;
-    }
 }

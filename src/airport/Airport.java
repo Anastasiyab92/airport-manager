@@ -9,18 +9,13 @@ public class Airport {
     private Airline[] airlines;
     private Terminal[] terminals;
 
-    public Airport(String name, Airline[] airlines, Terminal[] terminals) {
+    public Airport(String name,Terminal[] terminals) {
         this.name = name;
-        this.airlines = airlines;
         this.terminals = terminals;
     }
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Airline[] getAirlines() {
@@ -33,10 +28,6 @@ public class Airport {
 
     public Terminal[] getTerminals() {
         return terminals;
-    }
-
-    public void setTerminals(Terminal[] terminals) {
-        this.terminals = terminals;
     }
 
     public int calculateTotalPassengersOnDate(LocalDate date){

@@ -28,32 +28,16 @@ public class Flight {
         return flightNumber;
     }
 
-    public void setFlightNumber(String flightNumber) {
-        this.flightNumber = flightNumber;
-    }
-
     public String getDestination() {
         return destination;
-    }
-
-    public void setDestination(String destination) {
-        this.destination = destination;
     }
 
     public Schedule getSchedule() {
         return schedule;
     }
 
-    public void setSchedule(Schedule schedule) {
-        this.schedule = schedule;
-    }
-
     public Gate getGate() {
         return gate;
-    }
-
-    public void setGate(Gate gate) {
-        this.gate = gate;
     }
 
     public Ticket[] getTickets() {
