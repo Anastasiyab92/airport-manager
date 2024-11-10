@@ -5,11 +5,11 @@ import flight.Airline;
 import java.time.LocalDate;
 
 public class Airport {
-    private String name;
+    protected String name;
     private Airline[] airlines;
     private Terminal[] terminals;
 
-    public Airport(String name,Terminal[] terminals) {
+    public Airport(String name, Terminal[] terminals) {
         this.name = name;
         this.terminals = terminals;
     }
@@ -30,9 +30,9 @@ public class Airport {
         return terminals;
     }
 
-    public int calculateTotalPassengersOnDate(LocalDate date){
+    public int calculateTotalPassengersOnDate(LocalDate date) {
         int totalPassengers = 0;
-        for(Terminal terminal : terminals){
+        for (Terminal terminal : terminals) {
             totalPassengers += terminal.calculateCountPassengersOnDate(date);
         }
         return totalPassengers;

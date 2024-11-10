@@ -1,7 +1,7 @@
 package airport;
 
 public class Gate {
-    private String gateNumber;
+    protected String gateNumber;
 
     public Gate(String gateNumber) {
         this.gateNumber = gateNumber;

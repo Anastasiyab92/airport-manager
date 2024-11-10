@@ -64,8 +64,8 @@ public class Flight {
         this.baggage = baggage;
     }
 
-    public int getPassengerCountOnDate(LocalDate date){
-        if(schedule.getDateTime().toLocalDate().equals(date)){
+    public int getPassengerCountOnDate(LocalDate date) {
+        if (schedule.getDateTime().toLocalDate().equals(date)) {
             return tickets.length;
         }
         return 0;

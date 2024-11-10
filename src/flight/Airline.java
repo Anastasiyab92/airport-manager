@@ -1,7 +1,7 @@
 package flight;
 
 public class Airline {
-    private String name;
+    protected String name;
     private Flight[] flights;
 
     public Airline(String name) {
@@ -18,5 +18,9 @@ public class Airline {
 
     public void setFlights(Flight[] flights) {
         this.flights = flights;
+    }
+
+    public String provideServiceDescription() {
+        return "General airline services: Basic seating, refreshments, and customer service.";
     }
 }

@@ -5,7 +5,7 @@ import flight.Flight;
 import java.time.LocalDate;
 
 public class Terminal {
-    private String name;
+    protected String name;
     private Flight[] flights;
 
     public Terminal(String name) {
@@ -24,9 +24,9 @@ public class Terminal {
         this.flights = flights;
     }
 
-    public int calculateCountPassengersOnDate(LocalDate date){
+    public int calculateCountPassengersOnDate(LocalDate date) {
         int countPassengers = 0;
-        for(Flight flight : flights){
+        for (Flight flight : flights) {
             countPassengers += flight.getPassengerCountOnDate(date);
         }
         return countPassengers;
