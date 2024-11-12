@@ -1,6 +1,7 @@
 package flight;
 
 public class Airline {
+
     protected String name;
     private Flight[] flights;
 

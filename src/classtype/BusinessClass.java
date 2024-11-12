@@ -2,12 +2,15 @@ package classtype;
 
 public class BusinessClass extends ClassType {
 
-    public BusinessClass(double baggageAllowance) {
-        super("Business class", baggageAllowance);
+    public BusinessClass() {
+        super("Business class");
     }
 
     @Override
-    public String getServices() {
-        return "Сomfortable seating, premium meals, access to lounge, 20 kg carry-on baggage.";
+    public Service[] getServices() {
+        return new Service[]{
+                new Service("Comfortable seating", true, true, true, 20.0)
+
+        };
     }
 }

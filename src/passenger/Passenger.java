@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public class Passenger {
+
     private String name;
     private String passportNumber;
     private LocalDate dateOfBirth;

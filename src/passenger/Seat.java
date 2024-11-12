@@ -3,6 +3,7 @@ package passenger;
 import java.util.Objects;
 
 public class Seat {
+
     private String seatNumber;
 
     public Seat(String seatNumber) {

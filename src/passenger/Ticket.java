@@ -6,6 +6,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Ticket {
+
     private String seatNumber;
     private BigDecimal priceTicket;
     private ClassType classType;
@@ -63,7 +64,6 @@ public class Ticket {
         System.out.println("Ticket for passenger: " + passenger.getName());
         System.out.println("Class: " + classType.getName());
         System.out.println("Price: " + priceTicket);
-        System.out.println("Baggage allowance: " + classType.getBaggageAllowance() + " kg.");
-        System.out.println("Services: " + classType.getServices());
+        System.out.println("Seat number: " + seatNumber);
     }
 }

@@ -6,10 +6,7 @@ import airport.Terminal;
 import classtype.BusinessClass;
 import classtype.ClassType;
 import classtype.EconomyClass;
-import flight.Airline;
-import flight.AmericanAirlines;
-import flight.Flight;
-import flight.LotPolishAirlines;
+import flight.*;
 import passenger.Baggage;
 import passenger.Passenger;
 import passenger.Seat;
@@ -19,6 +16,7 @@ import schedule.Schedule;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 public class Main {
 
@@ -39,12 +37,12 @@ public class Main {
         System.out.print("The same hash of two passengers: ");
         System.out.println(passenger1.hashCode() == passenger2.hashCode());
 
-        ClassType economyClass = new EconomyClass(10.0);
-        ClassType businessClass = new BusinessClass(20.0);
+        ClassType economyClass = new EconomyClass();
+        ClassType businessClass = new BusinessClass();
 
         //implementation toString() method. Text representation of the ClassType object.
-        System.out.println(economyClass);
-        System.out.println(businessClass);
+        System.out.println(Arrays.toString(economyClass.getServices()));
+        System.out.println(Arrays.toString(businessClass.getServices()));
 
         //implementation equals() ahd hashCode() methods for comparison two objects the name field of ClassType.
         System.out.println("The same the type of class: " + economyClass.equals(businessClass));
@@ -69,7 +67,6 @@ public class Main {
         System.out.print("The same hash of two tickets: ");
         System.out.println(ticket1.hashCode() == ticket2.hashCode());
 
-        // in this method included the polymorphism method getService
         ticket1.printTicketDetails();
         ticket2.printTicketDetails();
 
@@ -126,8 +123,11 @@ public class Main {
         Airport airport = new Airport("Dubai International Airport", new Terminal[]{terminal});
         airport.setAirlines(new Airline[]{americanAirlines, lotPolishAirlines});
 
+        //call business method with parameter Airline
+        AirlineService airlineService = new AirlineService();
+
         for (Airline line : airport.getAirlines()) {
-            System.out.println(line.provideServiceDescription());
+            airlineService.printServiceInfo(line);
         }
 
         int totalPassengers1 = airport.calculateTotalPassengersOnDate(LocalDate.of(2024, 11, 18));

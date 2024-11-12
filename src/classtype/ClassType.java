@@ -1,31 +1,28 @@
 package classtype;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public abstract class ClassType {
-    protected String name;
-    protected double baggageAllowance;
 
-    public ClassType(String name, double baggageAllowance) {
+    protected String name;
+    protected Service[] services;
+
+    public ClassType(String name) {
         this.name = name;
-        this.baggageAllowance = baggageAllowance;
     }
 
     public String getName() {
         return name;
     }
 
-    public double getBaggageAllowance() {
-        return baggageAllowance;
-    }
-
-    public abstract String getServices();
+    public abstract Service[] getServices();
 
     @Override
     public String toString() {
         return "ClassType{" +
                 "name='" + name + '\'' +
-                ", baggageAllowance=" + baggageAllowance +
+                ", services=" + Arrays.toString(services) +
                 '}';
     }
 

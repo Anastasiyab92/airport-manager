@@ -9,6 +9,7 @@ import schedule.Schedule;
 import java.time.LocalDate;
 
 public class Flight {
+
     private String flightNumber;
     private String destination;
     private Schedule schedule;

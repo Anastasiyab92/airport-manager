@@ -2,13 +2,15 @@ package classtype;
 
 public class EconomyClass extends ClassType {
 
-    public EconomyClass(double baggageAllowance) {
-        super("Economy class", baggageAllowance);
+    public EconomyClass() {
+        super("Economy class");
     }
 
     @Override
-    public String getServices() {
-        return "Basic seating, in-flight drinks, 10 kg carry-on baggage.";
+    public Service[] getServices() {
+        return new Service[]{
+                new Service("Regular seating", false, true, false, 10.0)
+        };
     }
 }
 

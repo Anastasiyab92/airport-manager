@@ -1,6 +1,7 @@
 package passenger;
 
 public class Baggage {
+
     private double weight;
 
     public Baggage() {

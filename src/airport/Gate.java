@@ -1,6 +1,7 @@
 package airport;
 
 public class Gate {
+
     protected String gateNumber;
 
     public Gate(String gateNumber) {

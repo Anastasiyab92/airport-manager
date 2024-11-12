@@ -5,6 +5,7 @@ import flight.Flight;
 import java.time.LocalDate;
 
 public class Terminal {
+
     protected String name;
     private Flight[] flights;
 
