@@ -8,13 +8,13 @@ import java.util.Objects;
 public class Ticket {
 
     private String seatNumber;
-    private BigDecimal priceTicket;
+    private BigDecimal baseCost;
     private ClassType classType;
     private Passenger passenger;
 
     public Ticket(String seatNumber, BigDecimal priceTicket, ClassType classType) {
         this.seatNumber = seatNumber;
-        this.priceTicket = priceTicket;
+        this.baseCost = priceTicket;
         this.classType = classType;
     }
 
@@ -26,8 +26,8 @@ public class Ticket {
         return classType;
     }
 
-    public BigDecimal getPriceTicket() {
-        return priceTicket;
+    public BigDecimal getBaseCost() {
+        return baseCost;
     }
 
     public Passenger getPassenger() {
@@ -38,12 +38,19 @@ public class Ticket {
         this.passenger = passenger;
     }
 
+    // business method with parameter of SuperClass
+    public BigDecimal calculateTotalCost(ClassType classType) {
+        return classType.calculateCost(baseCost);
+    }
+
     @Override
     public String toString() {
         return "Ticket{" +
                 "seatNumber='" + seatNumber + '\'' +
+                ", baseCost=" + baseCost +
                 ", classType=" + classType +
                 ", passenger=" + passenger +
+                ", totalCost=" + calculateTotalCost(classType) +
                 '}';
     }
 
@@ -63,7 +70,7 @@ public class Ticket {
     public void printTicketDetails() {
         System.out.println("Ticket for passenger: " + passenger.getName());
         System.out.println("Class: " + classType.getName());
-        System.out.println("Price: " + priceTicket);
+        System.out.println("Price: " + classType.calculateCost(baseCost));
         System.out.println("Seat number: " + seatNumber);
     }
 }

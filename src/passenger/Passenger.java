@@ -27,6 +27,10 @@ public class Passenger {
         return dateOfBirth;
     }
 
+    public String passengerType() {
+        return "New passenger.";
+    }
+
     @Override
     public String toString() {
         return "Passenger{" +

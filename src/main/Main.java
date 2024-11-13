@@ -60,6 +60,10 @@ public class Main {
         System.out.println(ticket1);
         System.out.println(ticket2);
 
+        // business method with parameter of ClassType
+        System.out.println("Total price of ticket1 " + ticket1.calculateTotalCost(economyClass));
+        System.out.println("Total price of ticket2 " + ticket2.calculateTotalCost(economyClass));
+
         //implementation equals() ahd hashCode() methods for comparison two objects at all fields of Ticket .
         System.out.println("The same ticket: " + ticket1.equals(ticket2));
         System.out.println("Hash of ticket1: " + ticket1.hashCode());
@@ -74,7 +78,16 @@ public class Main {
         Ticket ticket4 = new Ticket("B005", new BigDecimal(450), businessClass);
         ticket3.setPassenger(passenger2);
         ticket4.setPassenger(passenger2);
+
+        System.out.println(ticket3);
+        System.out.println(ticket4);
+
+        // business method with parameter of ClassType
+        System.out.println("Total price of ticket3 " + ticket3.calculateTotalCost(businessClass));
+        System.out.println("Total price of ticket4 " + ticket4.calculateTotalCost(businessClass));
+
         ticket3.printTicketDetails();
+        ticket4.printTicketDetails();
 
         Seat seat1 = new Seat("10A");
         Seat seat2 = new Seat("15F");
@@ -114,21 +127,15 @@ public class Main {
         Terminal terminal = new Terminal("Terminal1");
         terminal.setFlights(new Flight[]{flight1, flight2, flight3, flight4});
 
-        Airline americanAirlines = new AmericanAirlines();
-        americanAirlines.setFlights(new Flight[]{flight2, flight4});
+        Airline lotPolishAirline = new Airline("LOT Polish Airlines", "Poland");
+        lotPolishAirline.setFlights(new Flight[]{flight1, flight2});
 
-        Airline lotPolishAirlines = new LotPolishAirlines();
-        lotPolishAirlines.setFlights(new Flight[]{flight1, flight3});
+        Airline americanAirlines = new Airline("American Airlines", "America");
+        americanAirlines.setFlights(new Flight[]{flight3, flight4});
 
         Airport airport = new Airport("Dubai International Airport", new Terminal[]{terminal});
-        airport.setAirlines(new Airline[]{americanAirlines, lotPolishAirlines});
+        airport.setAirlines(new Airline[]{lotPolishAirline, americanAirlines});
 
-        //call business method with parameter Airline
-        AirlineService airlineService = new AirlineService();
-
-        for (Airline line : airport.getAirlines()) {
-            airlineService.printServiceInfo(line);
-        }
 
         int totalPassengers1 = airport.calculateTotalPassengersOnDate(LocalDate.of(2024, 11, 18));
         int totalPassengers2 = airport.calculateTotalPassengersOnDate(LocalDate.of(2024, 11, 29));

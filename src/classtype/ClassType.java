@@ -1,5 +1,6 @@
 package classtype;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -17,6 +18,8 @@ public abstract class ClassType {
     }
 
     public abstract Service[] getServices();
+
+    public abstract BigDecimal calculateCost(BigDecimal baseCost);
 
     @Override
     public String toString() {
