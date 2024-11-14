@@ -4,23 +4,15 @@ import java.time.LocalDate;
 
 public class RegularPassenger extends Passenger {
 
-    public RegularPassenger(String name, String passportNumber, LocalDate dateOfBirth) {
+    private int frequentFlyerPoints;
+
+    public RegularPassenger(String name, String passportNumber, LocalDate dateOfBirth, int frequentFlyerPoints) {
         super(name, passportNumber, dateOfBirth);
+        this.frequentFlyerPoints = frequentFlyerPoints;
     }
 
-    @Override
-    public String getName() {
-        return super.getName();
-    }
-
-    @Override
-    public String getPassportNumber() {
-        return super.getPassportNumber();
-    }
-
-    @Override
-    public LocalDate getDateOfBirth() {
-        return super.getDateOfBirth();
+    public int getFrequentFlyerPoints() {
+        return frequentFlyerPoints;
     }
 
     @Override

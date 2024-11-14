@@ -3,24 +3,16 @@ package passenger;
 import java.time.LocalDate;
 
 public class VipPassenger extends Passenger {
+    private boolean loungeAccess;
 
-    public VipPassenger(String name, String passportNumber, LocalDate dateOfBirth) {
+    public VipPassenger(String name, String passportNumber, LocalDate dateOfBirth, boolean loungeAccess) {
         super(name, passportNumber, dateOfBirth);
+        this.loungeAccess = loungeAccess;
+
     }
 
-    @Override
-    public String getName() {
-        return super.getName();
-    }
-
-    @Override
-    public String getPassportNumber() {
-        return super.getPassportNumber();
-    }
-
-    @Override
-    public LocalDate getDateOfBirth() {
-        return super.getDateOfBirth();
+    public boolean isLoungeAccess() {
+        return loungeAccess;
     }
 
     @Override
