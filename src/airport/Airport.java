@@ -10,6 +10,11 @@ public class Airport {
     private Airline[] airlines;
     private Terminal[] terminals;
 
+    // execute this block for initialisation of data before create an instance of Airport
+    static {
+        System.out.println("Airport initialized.");
+    }
+
     public Airport(String name, Terminal[] terminals) {
         this.name = name;
         this.terminals = terminals;

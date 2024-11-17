@@ -4,7 +4,7 @@ import flight.Flight;
 
 import java.time.LocalDate;
 
-public class Terminal {
+public class Terminal implements Notifiable {
 
     protected String name;
     private Flight[] flights;
@@ -23,6 +23,11 @@ public class Terminal {
 
     public void setFlights(Flight[] flights) {
         this.flights = flights;
+    }
+
+    @Override
+    public void notification(String message) {
+        System.out.println("Terminal: " + name + ", notification: " + message);
     }
 
     public int calculateCountPassengersOnDate(LocalDate date) {

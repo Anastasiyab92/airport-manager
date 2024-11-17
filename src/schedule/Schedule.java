@@ -2,9 +2,14 @@ package schedule;
 
 import java.time.LocalDateTime;
 
-public class Schedule {
+/*
+class Schedule is final. It doesn't need to be expanded,
+because it's a base concept.
+ */
+public final class Schedule {
 
-    protected LocalDateTime dateTime;
+    // dateTime can't be changed.
+    public final LocalDateTime dateTime;
 
     public Schedule(LocalDateTime dateTime) {
         this.dateTime = dateTime;

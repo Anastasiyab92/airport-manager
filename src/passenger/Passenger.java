@@ -1,9 +1,11 @@
 package passenger;
 
+import airport.Boardable;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
-public class Passenger {
+public class Passenger implements Checkable, Boardable {
 
     private String name;
     private String passportNumber;
@@ -29,6 +31,17 @@ public class Passenger {
 
     public String passengerType() {
         return "New passenger.";
+    }
+
+    @Override
+    public boolean verify() {
+        return name != null && !name.isEmpty() && passportNumber != null && !passportNumber.isEmpty()
+                && dateOfBirth != null;
+    }
+
+    @Override
+    public void board() {
+        System.out.println(name + " is boarding the plane.");
     }
 
     @Override

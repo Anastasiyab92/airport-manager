@@ -1,8 +1,10 @@
 package flight;
 
+import airport.Notifiable;
+
 import java.util.Arrays;
 
-public class Airline {
+public class Airline implements Notifiable {
 
     protected String name;
     protected String country;
@@ -27,6 +29,11 @@ public class Airline {
 
     public void setFlights(Flight[] flights) {
         this.flights = flights;
+    }
+
+    @Override
+    public void notification(String message) {
+        System.out.println("Airline: " + name + " notification: " + message);
     }
 
     @Override

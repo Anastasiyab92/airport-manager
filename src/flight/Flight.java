@@ -7,21 +7,24 @@ import passenger.Ticket;
 import schedule.Schedule;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
-public class Flight {
+public class Flight implements Arrivable, Departable {
 
     private String flightNumber;
     private String destination;
-    private Schedule schedule;
+    private Schedule arrivalTime;
+    private Schedule departureTime;
     private Gate gate;
     private Ticket[] tickets;
     private Seat[] seats;
     private Baggage[] baggage;
 
-    public Flight(String flightNumber, String destination, Schedule schedule, Gate gate) {
+    public Flight(String flightNumber, String destination, Schedule arrivalTime, Schedule departureTime, Gate gate) {
         this.flightNumber = flightNumber;
         this.destination = destination;
-        this.schedule = schedule;
+        this.arrivalTime = arrivalTime;
+        this.departureTime = departureTime;
         this.gate = gate;
     }
 
@@ -31,14 +34,6 @@ public class Flight {
 
     public String getDestination() {
         return destination;
-    }
-
-    public Schedule getSchedule() {
-        return schedule;
-    }
-
-    public Gate getGate() {
-        return gate;
     }
 
     public Ticket[] getTickets() {
@@ -65,8 +60,54 @@ public class Flight {
         this.baggage = baggage;
     }
 
+    @Override
+    public LocalDateTime getArrivalTime() {
+        return arrivalTime.getDateTime();
+    }
+
+    @Override
+    public String getArrivalGate() {
+        return gate.getGateNumber();
+    }
+
+    @Override
+    public void processArrival() {
+        System.out.println("Flight " + flightNumber + " has arrived at gate " + getArrivalGate() + ".");
+    }
+
+    @Override
+    public LocalDateTime getDepartureTime() {
+        return departureTime.getDateTime();
+    }
+
+    @Override
+    public String getDepartureGate() {
+        return gate.getGateNumber();
+    }
+
+    @Override
+    public void processDeparture() {
+        System.out.println("Flight " + flightNumber + " is departing from gate " + getDepartureGate() + ".");
+    }
+
+    public static void processArrivals(Arrivable[] flights) {
+        System.out.println("Processing arrivals in Airport:");
+        for (Arrivable flight : flights) {
+            System.out.println("Arrival schedule " + flight.getArrivalTime() + " at gate " + flight.getArrivalGate());
+            flight.processArrival();
+        }
+    }
+
+    public static void processDepartures(Departable[] flights) {
+        System.out.println("Processing departures from Airport:");
+        for (Departable flight : flights) {
+            System.out.println("Departure scheduled: " + flight.getDepartureTime() + "at gate " + flight.getDepartureGate());
+            flight.processDeparture();
+        }
+    }
+
     public int getPassengerCountOnDate(LocalDate date) {
-        if (schedule.getDateTime().toLocalDate().equals(date)) {
+        if (arrivalTime.getDateTime().toLocalDate().equals(date)) {
             return tickets.length;
         }
         return 0;

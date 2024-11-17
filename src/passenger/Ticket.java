@@ -5,7 +5,7 @@ import classtype.ClassType;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class Ticket {
+public class Ticket implements Checkable {
 
     private String seatNumber;
     private BigDecimal baseCost;
@@ -36,6 +36,11 @@ public class Ticket {
 
     public void setPassenger(Passenger passenger) {
         this.passenger = passenger;
+    }
+
+    @Override
+    public boolean verify() {
+        return seatNumber != null && !seatNumber.isEmpty() && baseCost != null && classType != null && passenger.verify();
     }
 
     // business method with parameter of SuperClass

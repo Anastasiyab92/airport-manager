@@ -1,6 +1,6 @@
 package airport;
 
-public class Gate {
+public class Gate implements Boardable {
 
     protected String gateNumber;
 
@@ -10,5 +10,10 @@ public class Gate {
 
     public String getGateNumber() {
         return gateNumber;
+    }
+
+    @Override
+    public void board() {
+        System.out.println("Boarding at gate " + gateNumber + ".");
     }
 }
