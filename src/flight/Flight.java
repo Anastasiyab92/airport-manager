@@ -1,13 +1,13 @@
 package flight;
 
 import airport.Gate;
-import passenger.Baggage;
-import passenger.Seat;
-import passenger.Ticket;
+import airport.GateUnavailableException;
+import passenger.*;
 import schedule.Schedule;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.*;
 
 public class Flight implements Arrivable, Departable {
 
@@ -15,10 +15,10 @@ public class Flight implements Arrivable, Departable {
     private String destination;
     private Schedule arrivalTime;
     private Schedule departureTime;
-    private Gate gate;
-    private Ticket[] tickets;
-    private Seat[] seats;
-    private Baggage[] baggage;
+    private final Gate gate;
+    private Set<Ticket> tickets = new HashSet<>();
+    private Set<Seat> seats = new HashSet<>();
+    private Map<Ticket, Baggage> baggageMap = new HashMap<>();
 
     public Flight(String flightNumber, String destination, Schedule arrivalTime, Schedule departureTime, Gate gate) {
         this.flightNumber = flightNumber;
@@ -36,28 +36,20 @@ public class Flight implements Arrivable, Departable {
         return destination;
     }
 
-    public Ticket[] getTickets() {
+    public Gate getGate() {
+        return gate;
+    }
+
+    public Set<Ticket> getTickets() {
         return tickets;
     }
 
-    public void setTickets(Ticket[] tickets) {
-        this.tickets = tickets;
-    }
-
-    public Seat[] getSeats() {
+    public Set<Seat> getSeats() {
         return seats;
     }
 
-    public void setSeats(Seat[] seats) {
-        this.seats = seats;
-    }
-
-    public Baggage[] getBaggage() {
-        return baggage;
-    }
-
-    public void setBaggage(Baggage[] baggage) {
-        this.baggage = baggage;
+    public Map<Ticket, Baggage> getBaggageMap() {
+        return baggageMap;
     }
 
     @Override
@@ -90,7 +82,7 @@ public class Flight implements Arrivable, Departable {
         System.out.println("Flight " + flightNumber + " is departing from gate " + getDepartureGate() + ".");
     }
 
-    public static void processArrivals(Arrivable[] flights) {
+    public static void processArrivals(List<Flight> flights) {
         System.out.println("Processing arrivals in Airport:");
         for (Arrivable flight : flights) {
             System.out.println("Arrival schedule " + flight.getArrivalTime() + " at gate " + flight.getArrivalGate());
@@ -98,7 +90,7 @@ public class Flight implements Arrivable, Departable {
         }
     }
 
-    public static void processDepartures(Departable[] flights) {
+    public static void processDepartures(List<Flight> flights) {
         System.out.println("Processing departures from Airport:");
         for (Departable flight : flights) {
             System.out.println("Departure scheduled: " + flight.getDepartureTime() + "at gate " + flight.getDepartureGate());
@@ -108,8 +100,46 @@ public class Flight implements Arrivable, Departable {
 
     public int getPassengerCountOnDate(LocalDate date) {
         if (arrivalTime.getDateTime().toLocalDate().equals(date)) {
-            return tickets.length;
+            return tickets.size();
         }
         return 0;
+    }
+
+    public void sellTicket(Ticket ticket, Baggage baggage) {
+        if (tickets.contains(ticket)) {
+            throw new TicketAlreadySoldException("Number of ticket: " + ticket.getSeatNumber() + " is already sold!");
+        }
+        tickets.add(ticket);
+        baggageMap.put(ticket, baggage);
+    }
+
+    public void bookSeat(Seat seat) {
+        if (seats.contains(seat)) {
+            throw new SeatAlreadyBookedException("Seat: " + seat.getSeatNumber() + " is already booked!");
+        }
+        seats.add(seat);
+    }
+
+    public void assignGate() {
+        try (gate) { // AutoCloseable ensures gate is released after use
+            gate.reserveGate();
+            System.out.println("Gate " + gate.getGateNumber() + " assigned to flight " + flightNumber + ".");
+        } catch (GateUnavailableException e) {
+            System.out.println("Error assigning gate: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "flightNumber =' " + flightNumber + '\'' +
+                ", destination =' " + destination + '\'' +
+                ", arrivalTime = " + arrivalTime.dateTime +
+                ", departureTime = " + departureTime.dateTime +
+                ", gate = " + gate +
+                ", tickets = " + tickets +
+                ", seats = " + seats +
+                ", baggageMap = " + baggageMap +
+                '}';
     }
 }

@@ -2,5 +2,5 @@ package passenger;
 
 public interface Checkable {
 
-    boolean verify();
+    boolean verify() throws PassengerNotRegisteredException;
 }

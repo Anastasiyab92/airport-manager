@@ -1,13 +1,14 @@
 package classtype;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public abstract class ClassType {
 
     protected String name;
-    protected Service[] services;
+    protected List<Service> services = new ArrayList<>();
 
     public ClassType(String name) {
         this.name = name;
@@ -17,15 +18,19 @@ public abstract class ClassType {
         return name;
     }
 
-    public abstract Service[] getServices();
+    public List<Service> getServices() {
+        return services;
+    }
 
     public abstract BigDecimal calculateCost(BigDecimal baseCost);
+
+    public abstract double getMaxBaggageWeight();
 
     @Override
     public String toString() {
         return "ClassType{" +
-                "name='" + name + '\'' +
-                ", services=" + Arrays.toString(services) +
+                "services=" + services +
+                ", name='" + name + '\'' +
                 '}';
     }
 

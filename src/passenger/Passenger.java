@@ -7,9 +7,9 @@ import java.util.Objects;
 
 public class Passenger implements Checkable, Boardable {
 
-    private String name;
-    private String passportNumber;
-    private LocalDate dateOfBirth;
+    private final String name;
+    private final String passportNumber;
+    private final LocalDate dateOfBirth;
 
     public Passenger(String name, String passportNumber, LocalDate dateOfBirth) {
         this.name = name;
@@ -34,9 +34,13 @@ public class Passenger implements Checkable, Boardable {
     }
 
     @Override
-    public boolean verify() {
-        return name != null && !name.isEmpty() && passportNumber != null && !passportNumber.isEmpty()
-                && dateOfBirth != null;
+    public boolean verify() throws PassengerNotRegisteredException {
+        if (name != null && !name.isEmpty() && passportNumber != null && !passportNumber.isEmpty()
+                && dateOfBirth != null) {
+            return true;
+        } else {
+            throw new PassengerNotRegisteredException("Passenger data can't be null or empty.");
+        }
     }
 
     @Override

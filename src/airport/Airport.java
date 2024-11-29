@@ -3,19 +3,21 @@ package airport;
 import flight.Airline;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Airport {
 
     protected String name;
-    private Airline[] airlines;
-    private Terminal[] terminals;
+    private List<Airline> airlines = new ArrayList<>();
+    private List<Terminal> terminals;
 
     // execute this block for initialisation of data before create an instance of Airport
     static {
         System.out.println("Airport initialized.");
     }
 
-    public Airport(String name, Terminal[] terminals) {
+    public Airport(String name, List<Terminal> terminals) {
         this.name = name;
         this.terminals = terminals;
     }
@@ -24,16 +26,16 @@ public class Airport {
         return name;
     }
 
-    public Airline[] getAirlines() {
+    public List<Airline> getAirlines() {
         return airlines;
     }
 
-    public void setAirlines(Airline[] airlines) {
-        this.airlines = airlines;
+    public List<Terminal> getTerminals() {
+        return terminals;
     }
 
-    public Terminal[] getTerminals() {
-        return terminals;
+    public void addAirline(Airline airline) {
+        airlines.add(airline);
     }
 
     public int calculateTotalPassengersOnDate(LocalDate date) {

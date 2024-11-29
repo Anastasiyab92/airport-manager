@@ -39,7 +39,7 @@ public class Ticket implements Checkable {
     }
 
     @Override
-    public boolean verify() {
+    public boolean verify() throws PassengerNotRegisteredException {
         return seatNumber != null && !seatNumber.isEmpty() && baseCost != null && classType != null && passenger.verify();
     }
 
@@ -75,7 +75,7 @@ public class Ticket implements Checkable {
     public void printTicketDetails() {
         System.out.println("Ticket for passenger: " + passenger.getName());
         System.out.println("Class: " + classType.getName());
-        System.out.println("Price: " + classType.calculateCost(baseCost));
+        System.out.println("Price: " + classType.calculateCost(getBaseCost()));
         System.out.println("Seat number: " + seatNumber);
     }
 }

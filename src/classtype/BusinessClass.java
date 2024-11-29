@@ -1,6 +1,8 @@
 package classtype;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BusinessClass extends ClassType {
 
@@ -12,13 +14,19 @@ public class BusinessClass extends ClassType {
     }
 
     @Override
-    public Service[] getServices() {
-        return new Service[]{
-                new Service("Comfortable seating", true, true, true, MAX_WEIGHT_BAGGAGE_BUSINESS)
-
-        };
+    public double getMaxBaggageWeight() {
+        return MAX_WEIGHT_BAGGAGE_BUSINESS;
     }
 
+    @Override
+    public List<Service> getServices() {
+        List<Service> servicesBusinessClass = new ArrayList<>();
+        servicesBusinessClass.add(new Service("Comfortable seating", true, true, true,
+                MAX_WEIGHT_BAGGAGE_BUSINESS));
+        return servicesBusinessClass;
+    }
+
+    //"Comfortable seating", true, true, true, MAX_WEIGHT_BAGGAGE_BUSINESS
     @Override
     public BigDecimal calculateCost(BigDecimal baseCost) {
         return baseCost.multiply(BigDecimal.valueOf(1.5));

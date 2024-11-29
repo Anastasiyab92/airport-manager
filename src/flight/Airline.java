@@ -2,13 +2,14 @@ package flight;
 
 import airport.Notifiable;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Airline implements Notifiable {
 
     protected String name;
     protected String country;
-    private Flight[] flights;
+    private List<Flight> flights = new ArrayList<>();
 
     public Airline(String name, String country) {
         this.name = name;
@@ -23,12 +24,12 @@ public class Airline implements Notifiable {
         return country;
     }
 
-    public Flight[] getFlights() {
+    public List<Flight> getFlights() {
         return flights;
     }
 
-    public void setFlights(Flight[] flights) {
-        this.flights = flights;
+    public void addFlight(Flight flight) {
+        flights.add(flight);
     }
 
     @Override
@@ -41,7 +42,7 @@ public class Airline implements Notifiable {
         return "Airline{" +
                 "name='" + name + '\'' +
                 ", country='" + country + '\'' +
-                ", flights=" + Arrays.toString(flights) +
+                ", flights=" + flights +
                 '}';
     }
 }
