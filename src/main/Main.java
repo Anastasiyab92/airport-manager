@@ -146,6 +146,9 @@ public class Main {
         flight1.assignGate();
         flight2.assignGate();
 
+        flight1.setPassengers(passenger1);
+        flight1.findPassenger(passenger1.getPassportNumber());
+
         // try-with-resources
         try (BufferedReader reader = new BufferedReader(new FileReader("file.txt"))) {
             String line;

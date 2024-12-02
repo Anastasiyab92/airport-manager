@@ -19,6 +19,7 @@ public class Flight implements Arrivable, Departable {
     private Set<Ticket> tickets = new HashSet<>();
     private Set<Seat> seats = new HashSet<>();
     private Map<Ticket, Baggage> baggageMap = new HashMap<>();
+    private List<Passenger> passengers = new ArrayList<>();
 
     public Flight(String flightNumber, String destination, Schedule arrivalTime, Schedule departureTime, Gate gate) {
         this.flightNumber = flightNumber;
@@ -77,6 +78,14 @@ public class Flight implements Arrivable, Departable {
         return gate.getGateNumber();
     }
 
+    public List<Passenger> getPassengers() {
+        return passengers;
+    }
+
+    public void setPassengers(Passenger passenger) {
+        passengers.add(passenger);
+    }
+
     @Override
     public void processDeparture() {
         System.out.println("Flight " + flightNumber + " is departing from gate " + getDepartureGate() + ".");
@@ -126,8 +135,20 @@ public class Flight implements Arrivable, Departable {
             System.out.println("Gate " + gate.getGateNumber() + " assigned to flight " + flightNumber + ".");
         } catch (GateUnavailableException e) {
             System.out.println("Error assigning gate: " + e.getMessage());
+        } finally { // Always log gate status
+            System.out.println("Flight " + flightNumber + ": Gate " + gate.getGateNumber() + " assignment process completed.");
         }
     }
+
+    public Passenger findPassenger(String passportNumber) {
+        for (Passenger passenger : passengers) {
+            if (passenger.getPassportNumber().equals(passportNumber)) {
+                return passenger;
+            }
+        }
+        throw new PassengerNotFoundException("Passenger with passport " + passportNumber + " not found.");
+    }
+
 
     @Override
     public String toString() {
