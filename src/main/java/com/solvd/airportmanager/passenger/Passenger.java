@@ -1,6 +1,6 @@
-package main.java.com.solvd.airport.passenger;
+package com.solvd.airportmanager.passenger;
 
-import main.java.com.solvd.airport.airport.Boardable;
+import com.solvd.airportmanager.airport.Boardable;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -30,7 +30,7 @@ public class Passenger implements Checkable, Boardable {
     }
 
     public String passengerType() {
-        return "New main.java.com.solvd.airport.passenger.";
+        return "New passenger.";
     }
 
     @Override

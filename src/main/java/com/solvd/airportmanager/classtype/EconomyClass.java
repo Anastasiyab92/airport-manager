@@ -1,4 +1,4 @@
-package main.java.com.solvd.airport.classtype;
+package com.solvd.airportmanager.classtype;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;

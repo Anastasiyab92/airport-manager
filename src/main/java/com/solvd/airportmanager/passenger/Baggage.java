@@ -1,6 +1,6 @@
-package main.java.com.solvd.airport.passenger;
+package com.solvd.airportmanager.passenger;
 
-import main.java.com.solvd.airport.classtype.ClassType;
+import com.solvd.airportmanager.classtype.ClassType;
 
 import java.util.Objects;
 

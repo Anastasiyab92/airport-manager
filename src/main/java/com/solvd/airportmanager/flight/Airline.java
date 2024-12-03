@@ -1,6 +1,6 @@
-package main.java.com.solvd.airport.flight;
+package com.solvd.airportmanager.flight;
 
-import main.java.com.solvd.airport.airport.Notifiable;
+import com.solvd.airportmanager.airport.Notifiable;
 
 import java.util.ArrayList;
 import java.util.List;

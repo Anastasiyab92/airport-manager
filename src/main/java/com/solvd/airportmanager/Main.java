@@ -1,15 +1,15 @@
-package main.java.com.solvd.airport;
+package com.solvd.airportmanager;
 
-import main.java.com.solvd.airport.airport.Airport;
-import main.java.com.solvd.airport.airport.Gate;
-import main.java.com.solvd.airport.airport.Terminal;
-import main.java.com.solvd.airport.classtype.BusinessClass;
-import main.java.com.solvd.airport.classtype.ClassType;
-import main.java.com.solvd.airport.classtype.EconomyClass;
-import main.java.com.solvd.airport.flight.Airline;
-import main.java.com.solvd.airport.flight.Flight;
-import main.java.com.solvd.airport.passenger.*;
-import main.java.com.solvd.airport.schedule.Schedule;
+import com.solvd.airportmanager.airport.Airport;
+import com.solvd.airportmanager.airport.Gate;
+import com.solvd.airportmanager.airport.Terminal;
+import com.solvd.airportmanager.classtype.BusinessClass;
+import com.solvd.airportmanager.classtype.ClassType;
+import com.solvd.airportmanager.classtype.EconomyClass;
+import com.solvd.airportmanager.flight.Airline;
+import com.solvd.airportmanager.flight.Flight;
+import com.solvd.airportmanager.passenger.*;
+import com.solvd.airportmanager.schedule.Schedule;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -18,7 +18,10 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public class Main {
 
@@ -39,14 +42,14 @@ public class Main {
             passenger1.verify();
             passenger5.verify();
         } catch (PassengerNotRegisteredException ex) {
-            System.out.println("Error in main.java.com.solvd.airport.passenger data: " + ex.getMessage());
+            System.out.println("Error in passenger data: " + ex.getMessage());
         }
 
         // implementation toString() method. Text representation of the Passenger object.
         System.out.println(passenger1);
 
         //implementation equals() ahd hashCode() methods for comparison two objects the passportNumber field of Passenger.
-        System.out.println("The same main.java.com.solvd.airport.passenger: " + passenger1.equals(passenger2));
+        System.out.println("The same passenger: " + passenger1.equals(passenger2));
         System.out.println("Hash of passenger1: " + passenger1.hashCode());
         System.out.println("Hash of passenger2: " + passenger2.hashCode());
         System.out.print("The same hash of two passengers: ");
@@ -84,7 +87,7 @@ public class Main {
         try {
             AirportUtility.performCheck(ticket1);
         } catch (Exception e) {
-            System.out.println("Check the main.java.com.solvd.airport.passenger's data: " + e.getMessage());
+            System.out.println("Check the passenger's data: " + e.getMessage());
         }
 
         // implementation toString() method. Text representation of the Ticket object.
@@ -162,7 +165,7 @@ public class Main {
             e.printStackTrace();
         }
 
-        System.out.println("Information of main.java.com.solvd.airport.flight: " + flight1);
+        System.out.println("Information of flight: " + flight1);
 
         List<Flight> flights = new ArrayList<>();
         flights.add(flight1);
@@ -174,7 +177,7 @@ public class Main {
 
         for (Ticket ticket : flight1.getTickets()) {
             System.out.println("Type of class: " + ticket.getClassType().getName() + "; seat number: " + ticket.getSeatNumber()
-                    + "; main.java.com.solvd.airport.passenger: " + ticket.getPassenger().getName());
+                    + "; passenger: " + ticket.getPassenger().getName());
         }
 
         for (Seat seat : flight1.getSeats()) {

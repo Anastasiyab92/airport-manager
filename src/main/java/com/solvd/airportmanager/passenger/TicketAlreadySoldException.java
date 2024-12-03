@@ -1,4 +1,4 @@
-package main.java.com.solvd.airport.passenger;
+package com.solvd.airportmanager.passenger;
 
 public class TicketAlreadySoldException extends RuntimeException {
 

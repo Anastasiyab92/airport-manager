@@ -1,9 +1,9 @@
-package main.java.com.solvd.airport.flight;
+package com.solvd.airportmanager.flight;
 
-import main.java.com.solvd.airport.airport.Gate;
-import main.java.com.solvd.airport.airport.GateUnavailableException;
-import main.java.com.solvd.airport.passenger.*;
-import main.java.com.solvd.airport.schedule.Schedule;
+import com.solvd.airportmanager.airport.Gate;
+import com.solvd.airportmanager.airport.GateUnavailableException;
+import com.solvd.airportmanager.passenger.*;
+import com.solvd.airportmanager.schedule.Schedule;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -94,7 +94,7 @@ public class Flight implements Arrivable, Departable {
     public static void processArrivals(List<Flight> flights) {
         System.out.println("Processing arrivals in Airport:");
         for (Arrivable flight : flights) {
-            System.out.println("Arrival main.java.com.solvd.airport.schedule " + flight.getArrivalTime() + " at gate " + flight.getArrivalGate());
+            System.out.println("Arrival schedule " + flight.getArrivalTime() + " at gate " + flight.getArrivalGate());
             flight.processArrival();
         }
     }
@@ -132,7 +132,7 @@ public class Flight implements Arrivable, Departable {
     public void assignGate() {
         try (gate) { // AutoCloseable ensures gate is released after use
             gate.reserveGate();
-            System.out.println("Gate " + gate.getGateNumber() + " assigned to main.java.com.solvd.airport.flight " + flightNumber + ".");
+            System.out.println("Gate " + gate.getGateNumber() + " assigned to flight " + flightNumber + ".");
         } catch (GateUnavailableException e) {
             System.out.println("Error assigning gate: " + e.getMessage());
         } finally { // Always log gate status

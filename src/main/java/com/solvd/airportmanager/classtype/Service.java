@@ -1,4 +1,4 @@
-package main.java.com.solvd.airport.classtype;
+package com.solvd.airportmanager.classtype;
 
 public class Service {
 

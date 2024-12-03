@@ -1,4 +1,4 @@
-package main.java.com.solvd.airport.passenger;
+package com.solvd.airportmanager.passenger;
 
 import java.time.LocalDate;
 
@@ -17,6 +17,6 @@ public class VipPassenger extends Passenger {
 
     @Override
     public String passengerType() {
-        return "VIP main.java.com.solvd.airport.passenger.";
+        return "VIP passenger.";
     }
 }

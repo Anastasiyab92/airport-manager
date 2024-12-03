@@ -1,6 +1,6 @@
-package main.java.com.solvd.airport.passenger;
+package com.solvd.airportmanager.passenger;
 
-import main.java.com.solvd.airport.classtype.ClassType;
+import com.solvd.airportmanager.classtype.ClassType;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -54,7 +54,7 @@ public class Ticket implements Checkable {
                 "seatNumber='" + seatNumber + '\'' +
                 ", baseCost=" + baseCost +
                 ", classType=" + classType +
-                ", main.java.com.solvd.airport.passenger=" + passenger +
+                ", passenger=" + passenger +
                 ", totalCost=" + calculateTotalCost(classType) +
                 '}';
     }
@@ -73,7 +73,7 @@ public class Ticket implements Checkable {
     }
 
     public void printTicketDetails() {
-        System.out.println("Ticket for main.java.com.solvd.airport.passenger: " + passenger.getName());
+        System.out.println("Ticket for passenger: " + passenger.getName());
         System.out.println("Class: " + classType.getName());
         System.out.println("Price: " + classType.calculateCost(getBaseCost()));
         System.out.println("Seat number: " + seatNumber);

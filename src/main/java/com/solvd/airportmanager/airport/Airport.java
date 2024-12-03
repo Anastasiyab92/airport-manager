@@ -1,6 +1,6 @@
-package main.java.com.solvd.airport.airport;
+package com.solvd.airportmanager.airport;
 
-import main.java.com.solvd.airport.flight.Airline;
+import com.solvd.airportmanager.flight.Airline;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package main.java.com.solvd.airport.customgeneric;
+package com.solvd.airportmanager.customgeneric;
 
 import java.util.*;
 

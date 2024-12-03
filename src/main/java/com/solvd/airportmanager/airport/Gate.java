@@ -1,4 +1,4 @@
-package main.java.com.solvd.airport.airport;
+package com.solvd.airportmanager.airport;
 
 public class Gate implements Boardable, AutoCloseable {
 

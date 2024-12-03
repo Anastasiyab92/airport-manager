@@ -1,4 +1,4 @@
-package main.java.com.solvd.airport.schedule;
+package com.solvd.airportmanager.schedule;
 
 import java.time.LocalDateTime;
 

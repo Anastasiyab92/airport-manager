@@ -1,4 +1,4 @@
-package main.java.com.solvd.airport.passenger;
+package com.solvd.airportmanager.passenger;
 
 import java.time.LocalDate;
 
@@ -17,6 +17,6 @@ public class RegularPassenger extends Passenger {
 
     @Override
     public String passengerType() {
-        return "Regular main.java.com.solvd.airport.passenger.";
+        return "Regular passenger.";
     }
 }
