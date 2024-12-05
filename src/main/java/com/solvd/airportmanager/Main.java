@@ -10,6 +10,8 @@ import com.solvd.airportmanager.flight.Airline;
 import com.solvd.airportmanager.flight.Flight;
 import com.solvd.airportmanager.passenger.*;
 import com.solvd.airportmanager.schedule.Schedule;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -24,6 +26,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Main {
+
+    private static final Logger LOGGER = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
         Passenger passenger1 = new Passenger("Sergei", "PM1234567",
@@ -42,32 +46,30 @@ public class Main {
             passenger1.verify();
             passenger5.verify();
         } catch (PassengerNotRegisteredException ex) {
-            System.out.println("Error in passenger data: " + ex.getMessage());
+            LOGGER.error("Error in passenger data: ", ex);
         }
 
         // implementation toString() method. Text representation of the Passenger object.
-        System.out.println(passenger1);
+        LOGGER.debug(passenger1);
 
         //implementation equals() ahd hashCode() methods for comparison two objects the passportNumber field of Passenger.
-        System.out.println("The same passenger: " + passenger1.equals(passenger2));
-        System.out.println("Hash of passenger1: " + passenger1.hashCode());
-        System.out.println("Hash of passenger2: " + passenger2.hashCode());
-        System.out.print("The same hash of two passengers: ");
-        System.out.println(passenger1.hashCode() == passenger2.hashCode());
+        LOGGER.debug("The same passenger: {}\nHash of passenger1: {}\nHash of passenger2: {}",
+                passenger1.equals(passenger2), passenger1.hashCode(), passenger2.hashCode());
+        LOGGER.info("The same hash of two passengers: ");
+        LOGGER.debug(passenger1.hashCode() == passenger2.hashCode());
 
         ClassType economyClass = new EconomyClass();
         ClassType businessClass = new BusinessClass();
 
         //implementation toString() method. Text representation of the ClassType object.
-        System.out.println(economyClass.getServices());
-        System.out.println(businessClass.getServices());
+        LOGGER.debug(economyClass.getServices());
+        LOGGER.debug(businessClass.getServices());
 
         //implementation equals() ahd hashCode() methods for comparison two objects the name field of ClassType.
-        System.out.println("The same the type of class: " + economyClass.equals(businessClass));
-        System.out.println("Hash of economyClass : " + economyClass.hashCode());
-        System.out.println("Hash of businessClass: " + businessClass.hashCode());
-        System.out.print("The same hash of two classTypes: ");
-        System.out.println(economyClass.hashCode() == businessClass.hashCode());
+        LOGGER.debug("The same the type of class: {}\nHash of economyClass : {}\nHash of businessClass: {}",
+                economyClass.equals(businessClass), economyClass.hashCode(), businessClass.hashCode());
+        LOGGER.info("The same hash of two classTypes: ");
+        LOGGER.debug(economyClass.hashCode() == businessClass.hashCode());
 
         Baggage baggage1 = new Baggage(9.8, economyClass);
         Baggage baggage2 = new Baggage(8.8, economyClass);
@@ -87,24 +89,23 @@ public class Main {
         try {
             AirportUtility.performCheck(ticket1);
         } catch (Exception e) {
-            System.out.println("Check the passenger's data: " + e.getMessage());
+            LOGGER.error("Check the passenger's data: ", e);
         }
 
         // implementation toString() method. Text representation of the Ticket object.
-        System.out.println(ticket1);
+        LOGGER.debug(ticket1);
 
         // business method with parameter of ClassType
-        System.out.println("Total price of ticket1 " + ticket1.calculateTotalCost(economyClass));
-        System.out.println("Total price of ticket2 " + ticket2.calculateTotalCost(economyClass));
-        System.out.println("Total price of ticket3 " + ticket3.calculateTotalCost(businessClass));
-        System.out.println("Total price of ticket4 " + ticket4.calculateTotalCost(businessClass));
+        LOGGER.warn("Total price of ticket1 {}", ticket1.calculateTotalCost(economyClass));
+        LOGGER.warn("Total price of ticket2 {}", ticket2.calculateTotalCost(economyClass));
+        LOGGER.warn("Total price of ticket3 {}", ticket3.calculateTotalCost(businessClass));
+        LOGGER.warn("Total price of ticket4 {}", ticket4.calculateTotalCost(businessClass));
 
         //implementation equals() ahd hashCode() methods for comparison two objects at all fields of Ticket .
-        System.out.println("The same ticket: " + ticket1.equals(ticket2));
-        System.out.println("Hash of ticket1: " + ticket1.hashCode());
-        System.out.println("Hash of ticket2: " + ticket2.hashCode());
-        System.out.print("The same hash of two tickets: ");
-        System.out.println(ticket1.hashCode() == ticket2.hashCode());
+        LOGGER.debug("The same ticket: {}\nHash of ticket1: {}\nHash of ticket2: {}",
+                ticket1.equals(ticket2), ticket1.hashCode(), ticket2.hashCode());
+        LOGGER.info("The same hash of two tickets: ");
+        LOGGER.warn(ticket1.hashCode() == ticket2.hashCode());
 
         ticket1.printTicketDetails();
         ticket2.printTicketDetails();
@@ -134,7 +135,7 @@ public class Main {
             flight2.sellTicket(ticket4, baggage4);
             flight1.sellTicket(ticket1, baggage1);//Will throw exception
         } catch (TicketAlreadySoldException e) {
-            System.out.println("Error selling ticket: " + e.getMessage());
+            LOGGER.error("Error selling ticket: ", e);
         }
 
         try {
@@ -144,7 +145,7 @@ public class Main {
             flight2.bookSeat(seat4);
             flight2.bookSeat(seat4);
         } catch (SeatAlreadyBookedException e) {
-            System.out.println("Error booking seat: " + e.getMessage());
+            LOGGER.error("Error booking seat: ", e);
         }
 
         flight1.assignGate();
@@ -157,15 +158,15 @@ public class Main {
         try (BufferedReader reader = new BufferedReader(new FileReader("file.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                System.out.println(line);
+                LOGGER.info(line);
             }
         } catch (FileNotFoundException e) {
-            System.out.println("File not found. " + e.getMessage());
+            LOGGER.error("File not found. ", e);
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.error(e);
         }
 
-        System.out.println("Information of flight: " + flight1);
+        LOGGER.debug("Information of flight: {}", flight1);
 
         List<Flight> flights = new ArrayList<>();
         flights.add(flight1);
@@ -176,16 +177,16 @@ public class Main {
         Flight.processDepartures(flights);
 
         for (Ticket ticket : flight1.getTickets()) {
-            System.out.println("Type of class: " + ticket.getClassType().getName() + "; seat number: " + ticket.getSeatNumber()
-                    + "; passenger: " + ticket.getPassenger().getName());
+            LOGGER.info("Type of class: {}; seat number: {}; passenger: {}", ticket.getClassType().getName(),
+                    ticket.getSeatNumber(), ticket.getPassenger().getName());
         }
 
         for (Seat seat : flight1.getSeats()) {
-            System.out.println("Numbers of seats: " + seat.getSeatNumber());
+            LOGGER.info("Numbers of seats: {}", seat.getSeatNumber());
         }
 
         for (Map.Entry<Ticket, Baggage> entity : flight1.getBaggageMap().entrySet()) {
-            System.out.println("Ticket: " + entity.getKey() + ". " + entity.getValue());
+            LOGGER.info("Ticket: {}. {}", entity.getKey(), entity.getValue());
         }
 
         Terminal terminal = new Terminal("Terminal1");
@@ -202,6 +203,6 @@ public class Main {
 
         int totalPassengers1 = airport.calculateTotalPassengersOnDate(LocalDate.of(2024, 11, 18));
 
-        System.out.println("Total passengers scheduled for 2024-11-18: " + totalPassengers1);
+        LOGGER.debug("Total passengers scheduled for 2024-11-18: {}", totalPassengers1);
     }
 }

@@ -1,6 +1,8 @@
 package com.solvd.airportmanager.airport;
 
 import com.solvd.airportmanager.flight.Airline;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -8,13 +10,14 @@ import java.util.List;
 
 public class Airport {
 
+    private static final Logger LOGGER = LogManager.getLogger(Airport.class);
     protected String name;
     private List<Airline> airlines = new ArrayList<>();
     private List<Terminal> terminals;
 
     // execute this block for initialisation of data before create an instance of Airport
     static {
-        System.out.println("Airport initialized.");
+        LOGGER.info("Airport initialized.");
     }
 
     public Airport(String name, List<Terminal> terminals) {

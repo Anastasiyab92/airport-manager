@@ -1,6 +1,8 @@
 package com.solvd.airportmanager.airport;
 
 import com.solvd.airportmanager.flight.Flight;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -8,6 +10,7 @@ import java.util.List;
 
 public class Terminal implements Notifiable {
 
+    private static final Logger LOGGER = LogManager.getLogger(Terminal.class);
     protected String name;
     private List<Flight> flights = new ArrayList<>();
 
@@ -29,7 +32,7 @@ public class Terminal implements Notifiable {
 
     @Override
     public void notification(String message) {
-        System.out.println("Terminal: " + name + ", notification: " + message);
+        LOGGER.info("Terminal: {}, notification: {}. ", name,message);
     }
 
     public int calculateCountPassengersOnDate(LocalDate date) {

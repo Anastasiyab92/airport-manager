@@ -1,7 +1,11 @@
 package com.solvd.airportmanager.airport;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Gate implements Boardable, AutoCloseable {
 
+    private static final Logger LOGGER = LogManager.getLogger(Gate.class);
     protected String gateNumber;
     private boolean isAvailable;
 
@@ -23,13 +27,13 @@ public class Gate implements Boardable, AutoCloseable {
 
     @Override
     public void board() {
-        System.out.println("Boarding at gate " + gateNumber + ".");
+        LOGGER.info("Boarding at gate {} .", gateNumber);
     }
 
     @Override
     public void close() {
         isAvailable = true; // Automatically release gate when closing
-        System.out.println("Gate " + gateNumber + " has been released.");
+        LOGGER.info("Gate {} has been released.",gateNumber);
     }
 
     @Override

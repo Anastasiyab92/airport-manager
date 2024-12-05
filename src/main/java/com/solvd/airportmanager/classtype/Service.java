@@ -1,5 +1,8 @@
 package com.solvd.airportmanager.classtype;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Service {
 
     private String levelSeat;

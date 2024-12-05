@@ -1,12 +1,15 @@
 package com.solvd.airportmanager.passenger;
 
 import com.solvd.airportmanager.airport.Boardable;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class Passenger implements Checkable, Boardable {
 
+    private static final Logger LOGGER = LogManager.getLogger(Passenger.class);
     private final String name;
     private final String passportNumber;
     private final LocalDate dateOfBirth;
@@ -45,7 +48,7 @@ public class Passenger implements Checkable, Boardable {
 
     @Override
     public void board() {
-        System.out.println(name + " is boarding the plane.");
+        LOGGER.info(name,"{} is boarding the plane.");
     }
 
     @Override

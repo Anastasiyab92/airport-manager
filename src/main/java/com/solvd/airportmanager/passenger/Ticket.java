@@ -1,12 +1,15 @@
 package com.solvd.airportmanager.passenger;
 
 import com.solvd.airportmanager.classtype.ClassType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Ticket implements Checkable {
 
+    private static final Logger LOGGER = LogManager.getLogger(Ticket.class);
     private String seatNumber;
     private BigDecimal baseCost;
     private ClassType classType;
@@ -73,9 +76,7 @@ public class Ticket implements Checkable {
     }
 
     public void printTicketDetails() {
-        System.out.println("Ticket for passenger: " + passenger.getName());
-        System.out.println("Class: " + classType.getName());
-        System.out.println("Price: " + classType.calculateCost(getBaseCost()));
-        System.out.println("Seat number: " + seatNumber);
+        LOGGER.info("Ticket for passenger: {}\nClass: {}\nPrice: {}\nSeat number: {}",
+                passenger.getName(), classType.getName(), classType.calculateCost(getBaseCost()), seatNumber);
     }
 }

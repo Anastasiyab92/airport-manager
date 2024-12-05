@@ -7,7 +7,7 @@ import java.util.List;
 public class BusinessClass extends ClassType {
 
     // this field belongs class and can't be changed
-    public final static double MAX_WEIGHT_BAGGAGE_BUSINESS = 50.0;
+    public static final double MAX_WEIGHT_BAGGAGE_BUSINESS = 50.0;
 
     public BusinessClass() {
         super("Business class");
