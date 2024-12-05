@@ -11,14 +11,15 @@ import java.util.List;
 public class Airport {
 
     private static final Logger LOGGER = LogManager.getLogger(Airport.class);
-    protected String name;
-    private List<Airline> airlines = new ArrayList<>();
-    private List<Terminal> terminals;
 
     // execute this block for initialisation of data before create an instance of Airport
     static {
         LOGGER.info("Airport initialized.");
     }
+
+    protected String name;
+    private List<Airline> airlines = new ArrayList<>();
+    private List<Terminal> terminals;
 
     public Airport(String name, List<Terminal> terminals) {
         this.name = name;

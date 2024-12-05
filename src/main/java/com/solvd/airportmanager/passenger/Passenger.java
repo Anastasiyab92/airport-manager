@@ -48,7 +48,7 @@ public class Passenger implements Checkable, Boardable {
 
     @Override
     public void board() {
-        LOGGER.info(name,"{} is boarding the plane.");
+        LOGGER.info(name, "{} is boarding the plane.");
     }
 
     @Override

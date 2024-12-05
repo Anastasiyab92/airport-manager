@@ -33,7 +33,7 @@ public class Gate implements Boardable, AutoCloseable {
     @Override
     public void close() {
         isAvailable = true; // Automatically release gate when closing
-        LOGGER.info("Gate {} has been released.",gateNumber);
+        LOGGER.info("Gate {} has been released.", gateNumber);
     }
 
     @Override

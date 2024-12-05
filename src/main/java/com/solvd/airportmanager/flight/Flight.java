@@ -14,11 +14,11 @@ import java.util.*;
 public class Flight implements Arrivable, Departable {
 
     private static final Logger LOGGER = LogManager.getLogger(Flight.class);
+    private final Gate gate;
     private String flightNumber;
     private String destination;
     private Schedule arrivalTime;
     private Schedule departureTime;
-    private final Gate gate;
     private Set<Ticket> tickets = new HashSet<>();
     private Set<Seat> seats = new HashSet<>();
     private Map<Ticket, Baggage> baggageMap = new HashMap<>();
@@ -30,6 +30,22 @@ public class Flight implements Arrivable, Departable {
         this.arrivalTime = arrivalTime;
         this.departureTime = departureTime;
         this.gate = gate;
+    }
+
+    public static void processArrivals(List<Flight> flights) {
+        LOGGER.info("Processing arrivals in Airport:");
+        for (Arrivable flight : flights) {
+            LOGGER.info("Arrival schedule {} at gate {}. ", flight.getArrivalTime(), flight.getArrivalGate());
+            flight.processArrival();
+        }
+    }
+
+    public static void processDepartures(List<Flight> flights) {
+        LOGGER.info("Processing departures from Airport:");
+        for (Departable flight : flights) {
+            LOGGER.info("Departure scheduled: {} at gate {}.", flight.getDepartureTime(), flight.getDepartureGate());
+            flight.processDeparture();
+        }
     }
 
     public String getFlightNumber() {
@@ -68,7 +84,7 @@ public class Flight implements Arrivable, Departable {
 
     @Override
     public void processArrival() {
-        LOGGER.info("Flight {} has arrived at gate {}. ",flightNumber,getArrivalGate());
+        LOGGER.info("Flight {} has arrived at gate {}. ", flightNumber, getArrivalGate());
     }
 
     @Override
@@ -91,23 +107,7 @@ public class Flight implements Arrivable, Departable {
 
     @Override
     public void processDeparture() {
-        LOGGER.info("Flight {} is departing from gate {}.",flightNumber,getDepartureGate());
-    }
-
-    public static void processArrivals(List<Flight> flights) {
-        LOGGER.info("Processing arrivals in Airport:");
-        for (Arrivable flight : flights) {
-            LOGGER.info("Arrival schedule {} at gate {}. ",flight.getArrivalTime(),flight.getArrivalGate());
-            flight.processArrival();
-        }
-    }
-
-    public static void processDepartures(List<Flight> flights) {
-        LOGGER.info("Processing departures from Airport:");
-        for (Departable flight : flights) {
-            LOGGER.info("Departure scheduled: {} at gate {}.",flight.getDepartureTime(),flight.getDepartureGate());
-            flight.processDeparture();
-        }
+        LOGGER.info("Flight {} is departing from gate {}.", flightNumber, getDepartureGate());
     }
 
     public int getPassengerCountOnDate(LocalDate date) {
@@ -135,11 +135,11 @@ public class Flight implements Arrivable, Departable {
     public void assignGate() {
         try (gate) { // AutoCloseable ensures gate is released after use
             gate.reserveGate();
-            LOGGER.warn("Gate {} assigned to flight {}.",gate.getGateNumber(),flightNumber);
+            LOGGER.warn("Gate {} assigned to flight {}.", gate.getGateNumber(), flightNumber);
         } catch (GateUnavailableException e) {
-            LOGGER.error("Error assigning gate: ",e);
+            LOGGER.error("Error assigning gate: ", e);
         } finally { // Always log gate status
-            LOGGER.info("Flight {}: gate {} assignment process completed.",flightNumber,gate.getGateNumber());
+            LOGGER.info("Flight {}: gate {} assignment process completed.", flightNumber, gate.getGateNumber());
         }
     }
 

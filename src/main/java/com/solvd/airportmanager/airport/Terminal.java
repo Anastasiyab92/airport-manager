@@ -32,7 +32,7 @@ public class Terminal implements Notifiable {
 
     @Override
     public void notification(String message) {
-        LOGGER.info("Terminal: {}, notification: {}. ", name,message);
+        LOGGER.info("Terminal: {}, notification: {}. ", name, message);
     }
 
     public int calculateCountPassengersOnDate(LocalDate date) {

@@ -37,7 +37,7 @@ public class Airline implements Notifiable {
 
     @Override
     public void notification(String message) {
-        LOGGER.info("Airline: {}, notification: {}.",name,message);
+        LOGGER.info("Airline: {}, notification: {}.", name, message);
     }
 
     @Override

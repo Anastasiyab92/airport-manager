@@ -4,20 +4,9 @@ import java.util.*;
 
 public class CustomLinkedList<E> implements List<E> {
 
-    // Linked List Node
-    private static class Node<E> {
-        E data;
-        Node<E> next;
-
-        public Node(E data) {
-            this.data = data;
-        }
-    }
-
     private Node<E> head; // the first element of list
     private Node<E> tail; // the last element of list
     private int size;    // count of elements of list
-
     public CustomLinkedList() {
         this.head = null;
         this.tail = null;
@@ -199,5 +188,15 @@ public class CustomLinkedList<E> implements List<E> {
     @Override
     public List<E> subList(int fromIndex, int toIndex) {
         return List.of();
+    }
+
+    // Linked List Node
+    private static class Node<E> {
+        E data;
+        Node<E> next;
+
+        public Node(E data) {
+            this.data = data;
+        }
     }
 }
