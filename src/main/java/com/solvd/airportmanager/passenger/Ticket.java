@@ -1,15 +1,13 @@
 package com.solvd.airportmanager.passenger;
 
 import com.solvd.airportmanager.classtype.ClassType;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Ticket implements Checkable {
 
-    private static final Logger LOGGER = LogManager.getLogger(Ticket.class);
+    //private static final Logger LOGGER = LogManager.getLogger(Ticket.class);
     private String seatNumber;
     private BigDecimal baseCost;
     private ClassType classType;
@@ -53,13 +51,11 @@ public class Ticket implements Checkable {
 
     @Override
     public String toString() {
-        return "Ticket{" +
-                "seatNumber='" + seatNumber + '\'' +
-                ", baseCost=" + baseCost +
-                ", classType=" + classType +
-                ", passenger=" + passenger +
-                ", totalCost=" + calculateTotalCost(classType) +
-                '}';
+        return "Ticket seatNumber: " + seatNumber +
+                ", baseCost = " + baseCost +
+                ", classType: " + classType.getName() +
+                ", passenger: " + passenger.getName() +
+                ", totalCost: " + calculateTotalCost(classType);
     }
 
     @Override
@@ -75,8 +71,8 @@ public class Ticket implements Checkable {
         return Objects.hash(seatNumber, classType, passenger);
     }
 
-    public void printTicketDetails() {
-        LOGGER.info("Ticket for passenger: {}\nClass: {}\nPrice: {}\nSeat number: {}",
-                passenger.getName(), classType.getName(), classType.calculateCost(getBaseCost()), seatNumber);
-    }
+//    public void printTicketDetails() {
+//        LOGGER.info("Ticket for passenger: {}\nClass: {}\nPrice: {}\nSeat number: {}",
+//                passenger.getName(), classType.getName(), classType.calculateCost(getBaseCost()), seatNumber);
+//    }
 }

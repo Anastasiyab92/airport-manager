@@ -13,11 +13,13 @@ public class Passenger implements Checkable, Boardable {
     private final String name;
     private final String passportNumber;
     private final LocalDate dateOfBirth;
+    private final Gender gender;
 
-    public Passenger(String name, String passportNumber, LocalDate dateOfBirth) {
+    public Passenger(String name, String passportNumber, LocalDate dateOfBirth, Gender gender) {
         this.name = name;
         this.passportNumber = passportNumber;
         this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
     }
 
     public String getName() {
@@ -34,6 +36,10 @@ public class Passenger implements Checkable, Boardable {
 
     public String passengerType() {
         return "New passenger.";
+    }
+
+    public Gender getGender() {
+        return gender;
     }
 
     @Override

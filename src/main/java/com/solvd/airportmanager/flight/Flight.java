@@ -10,12 +10,13 @@ import org.apache.logging.log4j.Logger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.function.Predicate;
 
 public class Flight implements Arrivable, Departable {
 
     private static final Logger LOGGER = LogManager.getLogger(Flight.class);
     private final Gate gate;
-    private String flightNumber;
+    private final String flightNumber;
     private String destination;
     private Schedule arrivalTime;
     private Schedule departureTime;
@@ -126,7 +127,12 @@ public class Flight implements Arrivable, Departable {
     }
 
     public void bookSeat(Seat seat) {
-        if (seats.contains(seat)) {
+        if (seat == null) {
+            throw new IllegalArgumentException("Seat must not be null.");
+        }
+        //5.Predicate: to check if a seat is occupied.
+        Predicate<Seat> isSeatBooked = s -> seats.contains(s);
+        if (isSeatBooked.test(seat)) {
             throw new SeatAlreadyBookedException("Seat: " + seat.getSeatNumber() + " is already booked!");
         }
         seats.add(seat);
@@ -158,8 +164,8 @@ public class Flight implements Arrivable, Departable {
         return "Flight{" +
                 "flightNumber =' " + flightNumber + '\'' +
                 ", destination =' " + destination + '\'' +
-                ", arrivalTime = " + arrivalTime.dateTime +
-                ", departureTime = " + departureTime.dateTime +
+                ", arrivalTime = " + arrivalTime.getDateTime() +
+                ", departureTime = " + departureTime.getDateTime() +
                 ", gate = " + gate +
                 ", tickets = " + tickets +
                 ", seats = " + seats +

@@ -2,14 +2,18 @@ package com.solvd.airportmanager;
 
 import com.solvd.airportmanager.airport.Airport;
 import com.solvd.airportmanager.airport.Gate;
+import com.solvd.airportmanager.airport.GateType;
 import com.solvd.airportmanager.airport.Terminal;
 import com.solvd.airportmanager.classtype.BusinessClass;
 import com.solvd.airportmanager.classtype.ClassType;
 import com.solvd.airportmanager.classtype.EconomyClass;
+import com.solvd.airportmanager.customlambdafunction.CustomFunction;
 import com.solvd.airportmanager.flight.Airline;
 import com.solvd.airportmanager.flight.Flight;
+import com.solvd.airportmanager.flight.FlightType;
 import com.solvd.airportmanager.passenger.*;
 import com.solvd.airportmanager.schedule.Schedule;
+import com.solvd.airportmanager.schedule.WeekDay;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,6 +28,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class Main {
 
@@ -31,16 +38,22 @@ public class Main {
 
     public static void main(String[] args) {
         Passenger passenger1 = new Passenger("Sergei", "PM1234567",
-                LocalDate.of(1990, 5, 15));
-        Passenger passenger2 = new Passenger("Anton", "PM7654321",
-                LocalDate.of(1999, 6, 10));
+                LocalDate.of(1990, 5, 15), Gender.MALE);
+        Passenger passenger2 = new Passenger("Julia", "PM7654321",
+                LocalDate.of(1999, 6, 10), Gender.FEMALE);
         Passenger passenger3 = new Passenger("Mark", "PM3637384",
-                LocalDate.of(1989, 7, 26));
+                LocalDate.of(1989, 7, 26), Gender.MALE);
         Passenger passenger4 = new Passenger("Anastasia", "AP9897956",
-                LocalDate.of(1977, 12, 31));
+                LocalDate.of(1977, 12, 31), Gender.FEMALE);
 
         Passenger passenger5 = new Passenger("", "PK1234567",
-                LocalDate.of(1978, 2, 14));
+                LocalDate.of(1978, 2, 14), null);
+
+        //Consumer lambda function. Print passengers.
+        List<Passenger> passengers = Arrays.asList(passenger1, passenger2, passenger3, passenger4, passenger5);
+
+        Consumer<List<Passenger>> printPassengers = passenger -> passengers.forEach(LOGGER::info);
+        printPassengers.accept(passengers);
 
         try {
             passenger1.verify();
@@ -49,7 +62,7 @@ public class Main {
             LOGGER.error("Error in passenger data: ", ex);
         }
 
-        // implementation toString() method. Text representation of the Passenger object.
+        //implementation toString() method. Text representation of the Passenger object.
         LOGGER.debug(passenger1);
 
         //implementation equals() ahd hashCode() methods for comparison two objects the passportNumber field of Passenger.
@@ -76,6 +89,16 @@ public class Main {
         Baggage baggage3 = new Baggage(18.8, businessClass);
         Baggage baggage4 = new Baggage(19.8, businessClass);
 
+        List<Baggage> listBaggage = Arrays.asList(baggage1, baggage2, baggage3, baggage4);
+
+        //custom lambda function with generic
+        CustomFunction<List<Baggage>, Double> printInformationOfBaggage = baggage ->
+                listBaggage.stream().mapToDouble(Baggage::getWeight).sum();
+
+        double totalWeight = printInformationOfBaggage.apply(listBaggage);
+        LOGGER.info("Total baggage weight: {}kg.", totalWeight);
+
+
         Ticket ticket1 = new Ticket("A351", new BigDecimal(123), economyClass);
         Ticket ticket2 = new Ticket("A153", new BigDecimal(150), economyClass);
         Ticket ticket3 = new Ticket("B500", new BigDecimal(550), businessClass);
@@ -92,7 +115,7 @@ public class Main {
             LOGGER.error("Check the passenger's data: ", e);
         }
 
-        // implementation toString() method. Text representation of the Ticket object.
+        //implementation toString() method. Text representation of the Ticket object.
         LOGGER.debug(ticket1);
 
         // business method with parameter of ClassType
@@ -107,10 +130,11 @@ public class Main {
         LOGGER.info("The same hash of two tickets: ");
         LOGGER.warn(ticket1.hashCode() == ticket2.hashCode());
 
-        ticket1.printTicketDetails();
-        ticket2.printTicketDetails();
-        ticket3.printTicketDetails();
-        ticket4.printTicketDetails();
+        //Supplier lambda function.
+        List<Ticket> existingTickets = new ArrayList<>(Arrays.asList(ticket1, ticket2, ticket3, ticket4));
+        Supplier<List<Ticket>> ticketSupplier = () -> existingTickets;
+        List<Ticket> tickets = ticketSupplier.get();
+        tickets.forEach(LOGGER::info);
 
         Seat seat1 = new Seat("10A");
         Seat seat2 = new Seat("15F");
@@ -120,13 +144,30 @@ public class Main {
         Gate gate1 = new Gate("G1");
         Gate gate2 = new Gate("G2");
 
+        //Simple enum GateType
+        if (LOGGER.isInfoEnabled()) {
+            LOGGER.info("Available Gate Types: {}", Arrays.toString(GateType.values()));
+        }
+
         Schedule arrivalTime1 = new Schedule(LocalDateTime.of(2024, 11, 18, 10, 0));
         Schedule arrivalTime2 = new Schedule(LocalDateTime.of(2024, 11, 18, 8, 0));
         Schedule departureTime1 = new Schedule(LocalDateTime.of(2024, 11, 18, 14, 0));
         Schedule departureTime2 = new Schedule(LocalDateTime.of(2024, 11, 29, 12, 0));
 
+        LOGGER.info("Date time: {}, weekDay: {}", arrivalTime1.getDateTime(), arrivalTime1.getWeekDay());
+        LOGGER.info("Date time: {}, weekDay: {}", departureTime2.getDateTime(), departureTime2.getWeekDay());
+
+        //complex enum
+        WeekDay weekDay = arrivalTime1.getWeekDay();
+        LOGGER.info("Traffic Level: {}. Operating Hours: {}", weekDay.getTrafficLevel(), weekDay.getOperationHours());
+
         Flight flight1 = new Flight("A045", "Warsaw", arrivalTime1, departureTime1, gate1);
         Flight flight2 = new Flight("A055", "London", arrivalTime2, departureTime2, gate2);
+
+        //complex enum
+        Consumer<FlightType> flightInfoPrinter = flightType -> LOGGER.info("Flight Type: {}. Description: {}. Typical duration: {}",
+                flightType.name(), flightType.getDescription(), flightType.getTypicalDuration());
+        Arrays.stream(FlightType.values()).forEach(flightInfoPrinter);
 
         try {
             flight1.sellTicket(ticket1, baggage1);
@@ -152,9 +193,12 @@ public class Main {
         flight2.assignGate();
 
         flight1.setPassengers(passenger1);
+        flight1.setPassengers(passenger3);
+        flight2.setPassengers(passenger2);
+        flight2.setPassengers(passenger4);
         flight1.findPassenger(passenger1.getPassportNumber());
 
-        // try-with-resources
+        //try-with-resources
         try (BufferedReader reader = new BufferedReader(new FileReader("file.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -172,7 +216,18 @@ public class Main {
         flights.add(flight1);
         flights.add(flight2);
 
-        // polymorphism business method
+        //Function lambda. Converted flight to string with information about this flight.
+        Function<Flight, String> flightSummary = flight -> "Flight number: " + flight.getFlightNumber() + " is flies to "
+                + flight.getDestination();
+        flights.stream()
+                .map(flightSummary)
+                .forEach(LOGGER::info);
+
+        //Runnable: flight count display
+        Runnable showCountFlights = () -> LOGGER.info("Total flights: {} ", flights.size());
+        showCountFlights.run();
+
+        //polymorphism business method
         Flight.processArrivals(flights);
         Flight.processDepartures(flights);
 

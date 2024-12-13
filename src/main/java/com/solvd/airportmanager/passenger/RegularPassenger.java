@@ -6,8 +6,8 @@ public class RegularPassenger extends Passenger {
 
     private int frequentFlyerPoints;
 
-    public RegularPassenger(String name, String passportNumber, LocalDate dateOfBirth, int frequentFlyerPoints) {
-        super(name, passportNumber, dateOfBirth);
+    public RegularPassenger(String name, String passportNumber, LocalDate dateOfBirth, Gender gender, int frequentFlyerPoints) {
+        super(name, passportNumber, dateOfBirth, gender);
         this.frequentFlyerPoints = frequentFlyerPoints;
     }
 

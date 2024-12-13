@@ -7,6 +7,7 @@ public class CustomLinkedList<E> implements List<E> {
     private Node<E> head; // the first element of list
     private Node<E> tail; // the last element of list
     private int size;    // count of elements of list
+
     public CustomLinkedList() {
         this.head = null;
         this.tail = null;
