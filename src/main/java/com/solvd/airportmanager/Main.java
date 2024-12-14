@@ -24,10 +24,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -48,12 +45,6 @@ public class Main {
 
         Passenger passenger5 = new Passenger("", "PK1234567",
                 LocalDate.of(1978, 2, 14), null);
-
-        //Consumer lambda function. Print passengers.
-        List<Passenger> passengers = Arrays.asList(passenger1, passenger2, passenger3, passenger4, passenger5);
-
-        Consumer<List<Passenger>> printPassengers = passenger -> passengers.forEach(LOGGER::info);
-        printPassengers.accept(passengers);
 
         try {
             passenger1.verify();
@@ -89,16 +80,6 @@ public class Main {
         Baggage baggage3 = new Baggage(18.8, businessClass);
         Baggage baggage4 = new Baggage(19.8, businessClass);
 
-        List<Baggage> listBaggage = Arrays.asList(baggage1, baggage2, baggage3, baggage4);
-
-        //custom lambda function with generic
-        CustomFunction<List<Baggage>, Double> printInformationOfBaggage = baggage ->
-                listBaggage.stream().mapToDouble(Baggage::getWeight).sum();
-
-        double totalWeight = printInformationOfBaggage.apply(listBaggage);
-        LOGGER.info("Total baggage weight: {}kg.", totalWeight);
-
-
         Ticket ticket1 = new Ticket("A351", new BigDecimal(123), economyClass);
         Ticket ticket2 = new Ticket("A153", new BigDecimal(150), economyClass);
         Ticket ticket3 = new Ticket("B500", new BigDecimal(550), businessClass);
@@ -129,12 +110,6 @@ public class Main {
                 ticket1.equals(ticket2), ticket1.hashCode(), ticket2.hashCode());
         LOGGER.info("The same hash of two tickets: ");
         LOGGER.warn(ticket1.hashCode() == ticket2.hashCode());
-
-        //Supplier lambda function.
-        List<Ticket> existingTickets = new ArrayList<>(Arrays.asList(ticket1, ticket2, ticket3, ticket4));
-        Supplier<List<Ticket>> ticketSupplier = () -> existingTickets;
-        List<Ticket> tickets = ticketSupplier.get();
-        tickets.forEach(LOGGER::info);
 
         Seat seat1 = new Seat("10A");
         Seat seat2 = new Seat("15F");
@@ -198,6 +173,16 @@ public class Main {
         flight2.setPassengers(passenger4);
         flight1.findPassenger(passenger1.getPassportNumber());
 
+        //Consumer lambda function. Print passengers.
+        Consumer<List<Passenger>> printPassengers = passenger -> flight1.getPassengers().forEach(LOGGER::info);
+        flight1.printInfoPassenger(flight1.getPassengers(), printPassengers);
+        flight2.printInfoPassenger(flight2.getPassengers(), printPassengers);
+
+        //custom lambda function with generic
+        CustomFunction<Map<Ticket, Baggage>, Double> printInformationOfBaggage = baggage ->
+                flight1.getBaggageMap().values().stream().mapToDouble(Baggage::getWeight).sum();
+        LOGGER.info("Total baggage weight: {}kg.", flight1.countTotalBaggageWeight(flight1.getBaggageMap(), printInformationOfBaggage));
+
         //try-with-resources
         try (BufferedReader reader = new BufferedReader(new FileReader("file.txt"))) {
             String line;
@@ -215,17 +200,6 @@ public class Main {
         List<Flight> flights = new ArrayList<>();
         flights.add(flight1);
         flights.add(flight2);
-
-        //Function lambda. Converted flight to string with information about this flight.
-        Function<Flight, String> flightSummary = flight -> "Flight number: " + flight.getFlightNumber() + " is flies to "
-                + flight.getDestination();
-        flights.stream()
-                .map(flightSummary)
-                .forEach(LOGGER::info);
-
-        //Runnable: flight count display
-        Runnable showCountFlights = () -> LOGGER.info("Total flights: {} ", flights.size());
-        showCountFlights.run();
 
         //polymorphism business method
         Flight.processArrivals(flights);
@@ -246,6 +220,21 @@ public class Main {
 
         Terminal terminal = new Terminal("Terminal1");
         terminal.setFlights(flights);
+
+        //Function lambda. Converted flight to string with information about this flight.
+        Function<Flight, String> flightSummary = flight -> "Flight number: " + flight.getFlightNumber() + " is flies to "
+                + flight.getDestination();
+        terminal.printInfoFlight(terminal.getFlights(), flightSummary);
+
+        //Supplier function
+        Supplier<Set<Seat>> setSupplier = () -> flight1.getSeats();
+        Set<Seat> numbers = flight1.printNumberSeats(setSupplier);
+        numbers.forEach(Seat::getSeatNumber);
+
+        //Runnable: flight count display
+        Runnable showCountFlights = () -> LOGGER.info("Total flights: {} ", terminal.getFlights().size());
+        terminal.executeTask(showCountFlights);
+
         Airline lotPolishAirline = new Airline("LOT Polish Airlines", "Poland");
         lotPolishAirline.addFlight(flight1);
 

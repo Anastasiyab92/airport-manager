@@ -2,6 +2,7 @@ package com.solvd.airportmanager.flight;
 
 import com.solvd.airportmanager.airport.Gate;
 import com.solvd.airportmanager.airport.GateUnavailableException;
+import com.solvd.airportmanager.customlambdafunction.CustomFunction;
 import com.solvd.airportmanager.passenger.*;
 import com.solvd.airportmanager.schedule.Schedule;
 import org.apache.logging.log4j.LogManager;
@@ -10,7 +11,9 @@ import org.apache.logging.log4j.Logger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public class Flight implements Arrivable, Departable {
 
@@ -158,6 +161,17 @@ public class Flight implements Arrivable, Departable {
         throw new PassengerNotFoundException("Passenger with passport " + passportNumber + " not found.");
     }
 
+    public void printInfoPassenger(List<Passenger> passengerList, Consumer<List<Passenger>> consumer) {
+        consumer.accept(passengerList);
+    }
+
+    public Double countTotalBaggageWeight(Map<Ticket, Baggage> baggageOfFlight, CustomFunction<Map<Ticket, Baggage>, Double> countTotalWeight) {
+        return countTotalWeight.apply(baggageOfFlight);
+    }
+
+    public Set<Seat> printNumberSeats(Supplier<Set<Seat>> seatSupplier) {
+        return seatSupplier.get();
+    }
 
     @Override
     public String toString() {

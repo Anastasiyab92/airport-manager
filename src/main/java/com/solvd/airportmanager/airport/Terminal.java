@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 public class Terminal implements Notifiable {
 
@@ -33,6 +34,16 @@ public class Terminal implements Notifiable {
     @Override
     public void notification(String message) {
         LOGGER.info("Terminal: {}, notification: {}. ", name, message);
+    }
+
+    public void printInfoFlight(List<Flight> flightlist, Function<Flight, String> printInfo) {
+        flightlist.stream()
+                .map(printInfo)
+                .forEach(LOGGER::info);
+    }
+
+    public void executeTask(Runnable task) {
+        task.run();
     }
 
     public int calculateCountPassengersOnDate(LocalDate date) {

@@ -7,7 +7,6 @@ import java.util.Objects;
 
 public class Ticket implements Checkable {
 
-    //private static final Logger LOGGER = LogManager.getLogger(Ticket.class);
     private String seatNumber;
     private BigDecimal baseCost;
     private ClassType classType;
@@ -70,9 +69,4 @@ public class Ticket implements Checkable {
     public int hashCode() {
         return Objects.hash(seatNumber, classType, passenger);
     }
-
-//    public void printTicketDetails() {
-//        LOGGER.info("Ticket for passenger: {}\nClass: {}\nPrice: {}\nSeat number: {}",
-//                passenger.getName(), classType.getName(), classType.calculateCost(getBaseCost()), seatNumber);
-//    }
 }
