@@ -47,10 +47,8 @@ public class Terminal implements Notifiable {
     }
 
     public int calculateCountPassengersOnDate(LocalDate date) {
-        int countPassengers = 0;
-        for (Flight flight : flights) {
-            countPassengers += flight.getPassengerCountOnDate(date);
-        }
-        return countPassengers;
+        return flights.stream()
+                .mapToInt(flight -> flight.getPassengerCountOnDate(date))
+                .sum();
     }
 }

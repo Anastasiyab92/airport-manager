@@ -43,10 +43,8 @@ public class Airport {
     }
 
     public int calculateTotalPassengersOnDate(LocalDate date) {
-        int totalPassengers = 0;
-        for (Terminal terminal : terminals) {
-            totalPassengers += terminal.calculateCountPassengersOnDate(date);
-        }
-        return totalPassengers;
+        return terminals.stream()
+                .mapToInt(terminal -> terminal.calculateCountPassengersOnDate(date))
+                .sum();
     }
 }

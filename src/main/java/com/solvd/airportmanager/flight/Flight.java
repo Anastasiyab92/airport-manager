@@ -38,18 +38,20 @@ public class Flight implements Arrivable, Departable {
 
     public static void processArrivals(List<Flight> flights) {
         LOGGER.info("Processing arrivals in Airport:");
-        for (Arrivable flight : flights) {
-            LOGGER.info("Arrival schedule {} at gate {}. ", flight.getArrivalTime(), flight.getArrivalGate());
-            flight.processArrival();
-        }
+        flights.stream()
+                .forEach(flight -> {
+                    LOGGER.info("Arrival schedule {} at gate {}. ", flight.getArrivalTime(), flight.getArrivalGate());
+                    flight.processArrival();
+                });
     }
 
     public static void processDepartures(List<Flight> flights) {
         LOGGER.info("Processing departures from Airport:");
-        for (Departable flight : flights) {
-            LOGGER.info("Departure scheduled: {} at gate {}.", flight.getDepartureTime(), flight.getDepartureGate());
-            flight.processDeparture();
-        }
+        flights.stream()
+                .forEach(flight -> {
+                    LOGGER.info("Departure scheduled: {} at gate {}.", flight.getDepartureTime(), flight.getDepartureGate());
+                    flight.processDeparture();
+                });
     }
 
     public String getFlightNumber() {
@@ -152,13 +154,13 @@ public class Flight implements Arrivable, Departable {
         }
     }
 
-    public Passenger findPassenger(String passportNumber) {
-        for (Passenger passenger : passengers) {
-            if (passenger.getPassportNumber().equals(passportNumber)) {
-                return passenger;
-            }
-        }
-        throw new PassengerNotFoundException("Passenger with passport " + passportNumber + " not found.");
+    public Optional<Passenger> findPassengerByPassportNumber(String passportNumber) {
+        return passengers.stream()
+                .filter(passenger -> passenger.getPassportNumber().equals(passportNumber))
+                .findFirst()
+                .or(() -> {
+                    throw new PassengerNotFoundException("Passenger with passport " + passportNumber + " not found.");
+                });
     }
 
     public void printInfoPassenger(List<Passenger> passengerList, Consumer<List<Passenger>> consumer) {

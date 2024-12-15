@@ -24,10 +24,13 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
 
@@ -171,7 +174,8 @@ public class Main {
         flight1.setPassengers(passenger3);
         flight2.setPassengers(passenger2);
         flight2.setPassengers(passenger4);
-        flight1.findPassenger(passenger1.getPassportNumber());
+
+        LOGGER.warn(flight1.findPassengerByPassportNumber(passenger1.getPassportNumber()));
 
         //Consumer lambda function. Print passengers.
         Consumer<List<Passenger>> printPassengers = passenger -> flight1.getPassengers().forEach(LOGGER::info);
@@ -205,18 +209,17 @@ public class Main {
         Flight.processArrivals(flights);
         Flight.processDepartures(flights);
 
-        for (Ticket ticket : flight1.getTickets()) {
-            LOGGER.info("Type of class: {}; seat number: {}; passenger: {}", ticket.getClassType().getName(),
-                    ticket.getSeatNumber(), ticket.getPassenger().getName());
-        }
+        //Stream.forEach
+        flight1.getTickets().stream()
+                .forEach(ticket -> LOGGER.info("Type of class: {}; seat number: {}; passenger: {}",
+                        ticket.getClassType().getName(), ticket.getSeatNumber(), ticket.getPassenger().getName()));
 
-        for (Seat seat : flight1.getSeats()) {
-            LOGGER.info("Numbers of seats: {}", seat.getSeatNumber());
-        }
+        flight1.getSeats().stream()
+                .forEach(seat -> LOGGER.info("Numbers of seats: {}", seat.getSeatNumber()));
 
-        for (Map.Entry<Ticket, Baggage> entity : flight1.getBaggageMap().entrySet()) {
-            LOGGER.info("Ticket: {}. {}", entity.getKey(), entity.getValue());
-        }
+        flight1.getBaggageMap().entrySet().stream()
+                .forEach(ticketBaggageEntry -> LOGGER.info("Ticket: {}. {}", ticketBaggageEntry.getKey(),
+                        ticketBaggageEntry.getValue()));
 
         Terminal terminal = new Terminal("Terminal1");
         terminal.setFlights(flights);
@@ -247,6 +250,56 @@ public class Main {
 
         int totalPassengers1 = airport.calculateTotalPassengersOnDate(LocalDate.of(2024, 11, 18));
 
-        LOGGER.debug("Total passengers scheduled for 2024-11-18: {}", totalPassengers1);
+        LOGGER.debug("Total passengers scheduled for 2024-11-29: {}", totalPassengers1);
+
+        List<Passenger> passengerList = new ArrayList<>(Arrays.asList(passenger1, passenger2, passenger3, passenger4));
+
+        //Stream.filter
+        List<Ticket> ticketsBusinessClass = flight2.getTickets().stream()
+                .filter(ticket -> ticket.getClassType().equals(businessClass))
+                .toList();
+        LOGGER.info("Ticket of business class {}", ticketsBusinessClass);
+
+        //Stream.map, Stream.collect
+        List<String> flight2PassengerNameToUpperCase = flight2.getTickets().stream()
+                .map(ticket -> ticket.getPassenger().getName().toUpperCase())
+                .collect(Collectors.toList());
+        LOGGER.info("Name of passengers in flight2: {}", flight2PassengerNameToUpperCase);
+
+        //Stream.findFirst
+        flight2.getPassengers().stream()
+                .findFirst()
+                .ifPresent(passenger -> LOGGER.info("First passenger: {}", passenger));
+
+        //Stream.count
+        long count = flight2.getSeats().stream()
+                .count();
+        LOGGER.info("Number of booked seats: {}", count);
+
+        //Stream.allMatch
+        boolean allMatch = flight2.getPassengers().stream()
+                .allMatch(passenger -> {
+                    LocalDate today = LocalDate.now();
+                    return Period.between(passenger.getDateOfBirth(), today).getYears() >= 18;
+                });
+        LOGGER.info("All passengers are of legal age: {}", allMatch);
+
+        //Stream.anyMatch
+        boolean anyMatch = flight2.getTickets().stream()
+                .anyMatch(ticket -> ticket.getBaseCost().compareTo(BigDecimal.valueOf(300)) > 0);
+        LOGGER.info("Are there tickets more than 300$: {}", anyMatch);
+
+        //Stream.flatMap
+        List<String> allNamesOfPassengersInSystem = passengerList.stream()
+                .flatMap(passenger -> Stream.of(passenger.getName()))
+                .toList();
+        LOGGER.info("Name of passengers in system: {}", allNamesOfPassengersInSystem);
+
+        //Stream.peek
+        List<String> allNamesToLowerCase = passengerList.stream()
+                .map(passenger -> passenger.getName().toLowerCase())
+                .peek(passenger -> LOGGER.info("List of names in lower case {}", passenger))
+                .toList();
+        LOGGER.info("{}", allNamesToLowerCase);
     }
 }
