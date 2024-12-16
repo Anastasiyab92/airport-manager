@@ -1,9 +1,6 @@
 package com.solvd.airportmanager;
 
-import com.solvd.airportmanager.airport.Airport;
-import com.solvd.airportmanager.airport.Gate;
-import com.solvd.airportmanager.airport.GateType;
-import com.solvd.airportmanager.airport.Terminal;
+import com.solvd.airportmanager.airport.*;
 import com.solvd.airportmanager.classtype.BusinessClass;
 import com.solvd.airportmanager.classtype.ClassType;
 import com.solvd.airportmanager.classtype.EconomyClass;
@@ -30,7 +27,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Main {
 
@@ -252,6 +248,19 @@ public class Main {
 
         LOGGER.debug("Total passengers scheduled for 2024-11-29: {}", totalPassengers1);
 
+        //business method for calculating ticket sales tax.
+        TaxCalculateService taxCalculator = new TaxCalculateService();
+        BigDecimal totalTaxFlight1 = taxCalculator.calculateTax(flight1.getTickets(), ticket ->
+                ticket.calculateTotalCost(ticket.getClassType()).multiply(TaxCalculateService.DUBAI_TAX_RATE));
+
+        LOGGER.info("Final total tax for all tickets in flight1: {}$", totalTaxFlight1);
+
+        BigDecimal totalTaxFlight2 = taxCalculator.calculateTax(flight2.getTickets(), ticket ->
+                ticket.calculateTotalCost(ticket.getClassType()).multiply(TaxCalculateService.DUBAI_TAX_RATE)
+        );
+
+        LOGGER.info("Final total tax for all tickets in flight2: {}$", totalTaxFlight2);
+
         List<Passenger> passengerList = new ArrayList<>(Arrays.asList(passenger1, passenger2, passenger3, passenger4));
 
         //Stream.filter
@@ -290,10 +299,11 @@ public class Main {
         LOGGER.info("Are there tickets more than 300$: {}", anyMatch);
 
         //Stream.flatMap
-        List<String> allNamesOfPassengersInSystem = passengerList.stream()
-                .flatMap(passenger -> Stream.of(passenger.getName()))
+        List<String> numbersFlightOfAirport = airport.getAirlines().stream()
+                .flatMap(airline -> airline.getFlights().stream())
+                .map(Flight::getFlightNumber)
                 .toList();
-        LOGGER.info("Name of passengers in system: {}", allNamesOfPassengersInSystem);
+        LOGGER.info("Flight numbers at the airport {}", numbersFlightOfAirport);
 
         //Stream.peek
         List<String> allNamesToLowerCase = passengerList.stream()
