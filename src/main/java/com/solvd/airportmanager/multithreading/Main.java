@@ -34,6 +34,6 @@ public class Main {
 
         CompletableFuture<Void> tasks = CompletableFuture.allOf(task1, task2);
         tasks.join();
-        LOGGER.info("All CompletableFuture tasks!");
+        LOGGER.info("All CompletableFuture tasks completed!");
     }
 }
