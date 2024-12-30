@@ -47,6 +47,7 @@ public class Main {
 
         try {
             passenger1.verify();
+            passenger2.verify();
             passenger5.verify();
         } catch (PassengerNotRegisteredException ex) {
             LOGGER.error("Error in passenger data: ", ex);
